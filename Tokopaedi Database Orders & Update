@@ -1,0 +1,132 @@
+--Create a database namely tokopaedi
+CREATE DATABASE tokopaedi
+CREATE TABLE orders (
+	order_id VARCHAR,
+    customer_id VARCHAR,
+    postal_code INT,
+    product_id VARCHAR,
+    sales FLOAT,
+    quantity INT,
+    discount FLOAT,
+    profit FLOAT,
+    category VARCHAR,
+    subcategory VARCHAR,
+    product_name VARCHAR,
+    order_date DATE,
+    ship_date DATE,
+    ship_mode VARCHAR,
+    customer_name VARCHAR,
+    segment VARCHAR,
+    country VARCHAR,
+    city VARCHAR,
+    state_ VARCHAR,
+    region VARCHAR
+   )
+
+insert INTO orders VALUES ('CA-2019-152156', 
+                           'CG-12520', 
+                           42420, 
+                           'FUR-BO-10001798', 
+                          261.96,
+                           2 , 
+                           0.00,
+                           41.9136,
+                           'Furniture',
+                           'Bookcases',
+                           'Bush Somerset Collection Bookcase',
+                         '08/11/2019',
+                         '11/11/2019',
+                          'Second Class',
+                          'Claire Gute',
+                          'Consumer',
+                          'United States',
+                          'Henderson',
+                          'Kentucky',
+                          'South')
+                          
+INSERT INTO orders VALUES ( 'CA-2019-152156',
+                          'CG-12520',
+                           42420,
+                          'FUR-CH-10000454',
+                           731.94,
+                           3,
+                           0.00,
+                           219.582,
+                          'Furniture',
+                          'Chairs',
+                          'Hon Deluxe Fabric Upholstered Stacking Chairs, Rounded Back',
+                          '08/11/2019',
+                          '11/11/2019',
+                          'Second Class',
+                          'Claire Gute',
+                          'Consumer',
+                          'United States',
+                          'Henderson',
+                          'Kentucky',
+                          'South'
+                           )
+                           
+INSERT INTO orders VALUES ( 'CA-2019-138688',
+                           'DV-13045',
+                           90036,
+                           'OFF-LA-10000240',
+                            14.62,
+                            2,
+                            0.00,
+                            6.871,
+                           'Office Supplies',
+                          'Labels',
+                           'Self-Adhesive Address Labels for Typewriters by Universal',
+                           '12/06/2019',
+                           '6/06/2019',
+                           'Second Class',
+                           'Darrin Van Huff	Corporate',
+                           'United States',
+                           'Los Angeles',
+                           'California',
+                           'West'
+                            )
+                            
+INSERT INTO orders VALUES ('US-2018-108966',
+                          'SO-20335',
+                           33311,
+                         'FUR-TA-10000577',
+                           957.58,
+                           5,
+                           0.45,
+                           -383.031,
+                          'Furniture',
+                          'Tables',
+                          'Bretford CR4500 Series Slim Rectangular table',
+                          '10/11/2018',
+                          '10/18/2018',
+                          'Standard Class',
+                          'Sean O`Donnell',
+                          'Consumer',
+                          'United States',
+                          'Fort Lauderdale',
+                          'Florida',
+                          'South'
+                           )
+
+--There's a null and some wrong values in the date section, so it needs to be updated
+
+UPDATE orders set customer_name = 'Darrin Van Huff',
+		  segment = 'Corporate',
+		  country = 'United States',
+                  city = 'Los Angeles',
+                  state_ = 'California',
+                  region = 'West'
+where order_id = 'CA-2019-138688'
+
+UPDATE orders set order_date = '11/08/2019',
+		  ship_date = '11/11/2019'
+where order_id = 'CA-2019-152156'
+
+UPDATE orders set order_date = '06/12/2019',
+		  ship_date = '06/16/2019'
+where order_id = 'CA-2019-138688'
+
+UPDATE orders set order_date = '10/11/2018',
+		  ship_date = '10/18/2018'
+where order_id = 'US-2018-108966'
