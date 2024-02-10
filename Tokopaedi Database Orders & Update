@@ -1,5 +1,7 @@
 --Create a database namely tokopaedi
 CREATE DATABASE tokopaedi
+
+--Create an orders table
 CREATE TABLE orders (
 	order_id VARCHAR,
     customer_id VARCHAR,
