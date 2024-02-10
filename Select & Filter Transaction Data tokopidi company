@@ -34,6 +34,7 @@ where subcategory = 'Tables' and segment = 'Consumer'
 
 --Show the names of consumers from the Corporate and Home Office segments originating from the city of Los Angeles and 
 transactions during 2018.
-SELECT customer_name, segment, order_date from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
-where (segment in ('Home Office', 'Corporate')) and (order_date between '2018-01-01' and '2018-12-31')
+SELECT customer_name, city, segment, order_date from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
+where (segment in ('Home Office', 'Corporate')) and (order_date between '2018-01-01' and '2018-12-31') and city = 'Los Angeles'
+
 
