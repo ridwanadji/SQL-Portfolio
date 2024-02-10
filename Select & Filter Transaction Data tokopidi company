@@ -1,47 +1,39 @@
 --Dataset = orders transaction in tokopidi company
---Source = orders.csv
+--Source = https://docs.google.com/spreadsheets/d/11vW5m7666-QnN18K2e1gTD_JRkHHpyTzSjPUz7ZcF-w/edit?usp=sharing
 --Tool = Google Big Query 
 
---ambil semua kolom dan baris dari tabel yang mana SUBCATEGORYnya adalah PAPER
+--take all the columns and rows of the table where the SUB-CATEGORY is PAPER
 select * from `dataset_toko_saya.orders` where  subcategory = 'Paper'
 
---pilih semua kolom dari tabel order yang mana berasal dari kota los angeles dan subcategorynya adalah paper
+--Select all columns from the orders table which are from the city of Los Angeles and whose subcategory is paper
 SELECT * FROM `dataset_toko_saya.orders` where city = 'Los Angeles' and subcategory = 'Paper'
 
---pilih semua kolom dari tabel order yang mana berasal dari kota Los Angeles dan Henderson
+--select all columns from the order table which are from the cities of Los Angeles and Henderson
 select * from `dataset_toko_saya.orders` where city = 'Los Angeles' or city = 'Henderson'
 
---pilih semua kolom dari tabel order yang mana berasal dari kota Los Angeles, Henderson, dan Des Moines
-select * from `dataset_toko_saya.orders` where city = 'Los Angeles' or city = 'Henderson' or city = 'Des Moines'
+--select all columns from the order table which are from the cities of Los Angeles, Henderson, and Des Moines
+select * from `dataset_toko_saya.orders` where city in ('Los Angeles', 'Henderson', 'Des Moines')
 
---penggunaan In untuk filter value yang diinginkan
-select * from `dataset_toko_saya.orders` where city in ('Los Angeles', 'Henderson', 'Des Moines') --hasilnya sama dengan yang diatas sehingga tidak perlu ketik "city =" lagi
+--show transactions that do not originate from the city of Los Angeles
+select * from `dataset_toko_saya.orders`where not city = 'Los Angeles'
 
---tampilkan transaksi yang tidak berasal dari kota Los Angeles
-select
-*
-from
-`dataset_toko_saya.orders`where not city = 'Los Angeles'
+--display all transactions except transactions from the cities of Los Angeles, Henderson, and Des Moines
+select * from `dataset_toko_saya.orders` where city not in ('Los Angeles','Henderson','Des Moines')
 
---tampilkan seluruh transaksi kecuali transaksi dari kota Los Angeles, Henderson, dan Des Moines menggunakan Not In
-select
-*
-from
-`dataset_toko_saya.orders`
-where city
-not in
-('Los Angeles','Henderson','Des Moines')
+--show all Paper transactions in Los Angeles and Art in Henderson
+select * from `dataset_toko_saya.orders` 
+where (city = 'Los Angeles' and subcategory = 'Paper') or (city = 'Henderson' and subcategory = 'Art')
 
---tampilkan semua transaksi Paper di Los Angeles dan Art di Henderson
-select
-*
-from
-`dataset_toko_saya.orders`
-where (city = 'Los Angeles' and subcategory = 'Paper') or (city = 'Henderson' and subcategory = 'Art') --apabila syntax yang dibuat kompleks, lebih baik dibuat tanda kurung supaya menghindari misinformasi syntax
-
---tampilkan semua transaksi Paper dan Phone di Los Angeles dan Art dan Binders di Henderson
-select
-*
-from
-`dataset_toko_saya.orders`
+--show all Paper and Phone transactions in Los Angeles and Art and Binders in Henderson
+select * from `dataset_toko_saya.orders`
 where (city = 'Los Angeles' and subcategory in ('Paper','Phone')) or (city = 'Henderson' and subcategory in ('Art', 'Binders'))
+
+--Display the names of consumers in the Consumer segment who have purchased tables
+SELECT customer_name, segment, subcategory from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
+where subcategory = 'Tables' and segment = 'Consumer'
+
+--Show the names of consumers from the Corporate and Home Office segments originating from the city of Los Angeles and 
+transactions during 2018.
+SELECT customer_name, segment, order_date from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
+where (segment in ('Home Office', 'Corporate')) and (order_date between '2018-01-01' and '2018-12-31')
+
