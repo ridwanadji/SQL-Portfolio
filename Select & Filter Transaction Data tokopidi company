@@ -1,0 +1,47 @@
+--Dataset = orders transaction in tokopidi company
+--Source = orders.csv
+--Tool = Google Big Query 
+
+--ambil semua kolom dan baris dari tabel yang mana SUBCATEGORYnya adalah PAPER
+select * from `dataset_toko_saya.orders` where  subcategory = 'Paper'
+
+--pilih semua kolom dari tabel order yang mana berasal dari kota los angeles dan subcategorynya adalah paper
+SELECT * FROM `dataset_toko_saya.orders` where city = 'Los Angeles' and subcategory = 'Paper'
+
+--pilih semua kolom dari tabel order yang mana berasal dari kota Los Angeles dan Henderson
+select * from `dataset_toko_saya.orders` where city = 'Los Angeles' or city = 'Henderson'
+
+--pilih semua kolom dari tabel order yang mana berasal dari kota Los Angeles, Henderson, dan Des Moines
+select * from `dataset_toko_saya.orders` where city = 'Los Angeles' or city = 'Henderson' or city = 'Des Moines'
+
+--penggunaan In untuk filter value yang diinginkan
+select * from `dataset_toko_saya.orders` where city in ('Los Angeles', 'Henderson', 'Des Moines') --hasilnya sama dengan yang diatas sehingga tidak perlu ketik "city =" lagi
+
+--tampilkan transaksi yang tidak berasal dari kota Los Angeles
+select
+*
+from
+`dataset_toko_saya.orders`where not city = 'Los Angeles'
+
+--tampilkan seluruh transaksi kecuali transaksi dari kota Los Angeles, Henderson, dan Des Moines menggunakan Not In
+select
+*
+from
+`dataset_toko_saya.orders`
+where city
+not in
+('Los Angeles','Henderson','Des Moines')
+
+--tampilkan semua transaksi Paper di Los Angeles dan Art di Henderson
+select
+*
+from
+`dataset_toko_saya.orders`
+where (city = 'Los Angeles' and subcategory = 'Paper') or (city = 'Henderson' and subcategory = 'Art') --apabila syntax yang dibuat kompleks, lebih baik dibuat tanda kurung supaya menghindari misinformasi syntax
+
+--tampilkan semua transaksi Paper dan Phone di Los Angeles dan Art dan Binders di Henderson
+select
+*
+from
+`dataset_toko_saya.orders`
+where (city = 'Los Angeles' and subcategory in ('Paper','Phone')) or (city = 'Henderson' and subcategory in ('Art', 'Binders'))
