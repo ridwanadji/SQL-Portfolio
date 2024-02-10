@@ -1,0 +1,10 @@
+create DATABASE Trial_1
+create TABLE table_saya(
+	nama VARCHAR,
+	alamat VARCHAR,
+	usia INT,
+  	hobi VARCHAR
+)
+
+--If you want to delete the table
+DROP TABLE table_saya
