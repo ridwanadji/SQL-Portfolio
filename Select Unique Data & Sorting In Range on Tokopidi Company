@@ -1,0 +1,113 @@
+--display the entire table where the largest profits are displayed with a sales range of 50 to 100
+select
+*
+from
+`dataset_toko_saya.orders`
+where
+profit between 50 and 100
+
+
+--Mention any subcategories in the office supplies category
+select
+distinct category, subcategory
+from
+`dataset_toko_saya.orders`
+where category = 'Office Supplies'
+
+
+--How many delivery schemes are there?
+select
+distinct ship_mode
+from
+`dataset_toko_saya.orders`
+
+
+--display transactions based on consumer name sorted ascending
+select
+*
+from
+`dataset_toko_saya.orders`
+order by customer_name
+
+
+--display a list of consumer names and their cities, sorted by consumer name in ascending order, ada berapa jumlah konsumen?
+select
+distinct customer_name, city
+from
+`dataset_toko_saya.orders`
+order by customer_name --tampilan tabel yg diminta
+
+
+--how many consumers are there?
+select count 
+(distinct customer_name)
+from
+`dataset_toko_saya.orders`
+
+
+--order with multiple column
+select
+city, category
+from
+`dataset_toko_saya.orders`
+order by city, category
+
+select
+  city, 
+  category, 
+  order_date, 
+  customer_name
+from
+`dataset_toko_saya.orders`
+order by 1, 2 --Sort by  1st and 2nd columns
+
+
+
+--order with multiple columns and multiple sequences
+select
+city, category
+from
+`dataset_toko_saya.orders`
+order by city, category desc
+
+
+--display the first 10 rows based on order_date
+select
+order_date
+from
+`dataset_toko_saya.orders`
+order by order_date 
+limit 10 
+
+
+--display the last 10 rows based on order_date
+select
+order_date
+from
+`dataset_toko_saya.orders`
+order by order_date desc
+limit 10
+
+
+--change the column name of city, category, order_date, customer_name in bahasa indonesia
+select
+  city kota, 
+  category kategori, 
+  order_date `tanggal order`, 
+  customer_name nama_pelanggan
+from
+`dataset_toko_saya.orders`
+where category = 'Office Supplies'
+order by 1, 2
+
+
+--Query the losses transactions that occurred in 2018 to 2019in the city of Los Angeles. Sorted from the greatest loss
+SELECT PROFIT from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
+  where profit < 0 and (city = 'Los Angeles') and (order_date between '2018-01-01' and '2019-12-31') 
+  order by profit 
+
+
+--Query only profitable transactions that occurred in Q1 2018 in the city Henderson. sorted from greatest profit
+SELECT PROFIT from tokopidi-company-sql-basic-2.dataset_toko_saya.orders 
+  where profit > 0 and (city = 'Henderson') and (order_date between '2018-01-01' and '2018-04-30') 
+  order by profit desc
