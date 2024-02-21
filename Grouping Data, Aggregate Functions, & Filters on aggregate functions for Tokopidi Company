@@ -1,39 +1,45 @@
--- MIN MAX SUM AVG
+--Dataset = orders transaction in tokopidi company
+--Source = https://docs.google.com/spreadsheets/d/11vW5m7666-QnN18K2e1gTD_JRkHHpyTzSjPUz7ZcF-w/edit?usp=sharing
+--Tool = Google Big Query 
+
+-- find the minimum sales
 select
   min(sales) --min
 from
   `dataset_toko_saya.orders`
 
+--find the maximum profit
 select
   max(profit) --max
 from
   `dataset_toko_saya.orders`
 
+find the average profit
 select
   avg(profit) --avg
 from
   `dataset_toko_saya.orders`
 
+find the total sales
 select
   sum(sales) --sum
 from
   `dataset_toko_saya.orders`
 
---tampilkan jumlah penjualan dikelompokan (GROUP BY) berdasarkan kota, diurutkan berdasarkan penjualan terbesar ke terkecil
+--display the number of sales grouped by city, sorted from largest to smallest sales
 select city, 
   (sum (sales)) total_penjualan
   from `dataset_toko_saya.orders` 
   group by city
   order by sum (sales) desc 
---atau
+--or
 select city, 
   (sum (sales)) total_penjualan
   from `dataset_toko_saya.orders` 
   group by 1
   order by 2 desc 
 
---siapa konsumen yang paling loyal/paling sering belanja?
---tampilkan nama konsumen dan banyaknya belanja dikelpmpokan berdasarkan konsumen dan diurutkan berdasarkan banyaknya belanja
+--display consumer names and total spending per person grouped by consumer and sorted based on total spending
 select
   customer_name, (count(distinct order_id))
 from
@@ -41,7 +47,7 @@ from
 group by 1
 order by 2 desc
 
---produk apa yang paling best seller di kota Los Angeles
+--what product is the best seller in the city of Los Angeles
 select
   product_name, sum (quantity)
 from
@@ -50,7 +56,7 @@ where city = 'Los Angeles'
 group by 1
 order by 2 desc
 
---tampilkan total penjualan (sales) berdasarkan kategori di setiap region!
+--display total sales by category in each region!
 select
   region, 
   category, 
@@ -60,7 +66,7 @@ FROM
 group by 1, 2
 order by 1, 2
 
---tampilkan jumlah order dan banyaknya penjualan per orang
+--display the number of orders and the number of sales per person
 select
    customer_name,
   (count (distinct order_id)) Jumlah_order,
@@ -69,17 +75,7 @@ from `dataset_toko_saya.orders`
 group by 1
 order by 1
 
---ORANG KAYA (orang yang total belanjanya diatas 10000 dolar)
-select
-  customer_name,
-  sum(sales)  
-from
-  `dataset_toko_saya.orders`
-where sum(sales) >= 10000 --where tidak bisa memuat fungsi agregat
-group by 1
-
---apabila ada fungsi agregat (sum, avg, dll) dalam menamilkan data, disarnkan menggunakan 'HAVING'
---having diquery setelah group by
+--people whose total spending is above 10,000 dollars
 select
   customer_name,
   sum(sales)  
@@ -88,10 +84,40 @@ from
 group by 1
 having sum(sales) > 10000
 
---contoh kombinasi where dan having
+--display name and total sales rounded up per person based on New York City
 select
   customer_name,
   round (sum(sales),2)  
+
+--no.1
+SELECT customer_id, customer_name
+from tokopidi-company-sql-basic-2.dataset_toko_saya.orders
+group by 1, 2
+order by customer_name
+
+--no.2
+select
+  product_name,
+  category,
+  subcategory,
+  sum(sales) as total_selling
+from tokopidi-company-sql-basic-2.dataset_toko_saya.orders
+group by 1, 2, 3
+order by 4 desc
+
+--no.3
+select
+  order_date,
+  product_name,
+  category,
+  subcategory,
+  sum(profit) as total_profit
+from tokopidi-company-sql-basic-2.dataset_toko_saya.orders
+where order_date between '2017-01-01' and '2017-12-31'
+group by 1, 2, 3, 4
+having sum(profit) < 0
+order by 5 
+
 from
   `dataset_toko_saya.orders`
 where city = 'New York City'
