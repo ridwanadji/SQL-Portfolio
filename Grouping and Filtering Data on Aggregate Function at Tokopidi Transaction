@@ -89,13 +89,14 @@ select
   customer_name,
   round (sum(sales),2)  
 
---no.1
+
+--display customer id and name without duplicates sorted alphabetically
 SELECT customer_id, customer_name
 from tokopidi-company-sql-basic-2.dataset_toko_saya.orders
 group by 1, 2
 order by customer_name
 
---no.2
+--What product is the best selling
 select
   product_name,
   category,
@@ -105,7 +106,7 @@ from tokopidi-company-sql-basic-2.dataset_toko_saya.orders
 group by 1, 2, 3
 order by 4 desc
 
---no.3
+--What products made the most losses during 2017
 select
   order_date,
   product_name,
@@ -117,9 +118,3 @@ where order_date between '2017-01-01' and '2017-12-31'
 group by 1, 2, 3, 4
 having sum(profit) < 0
 order by 5 
-
-from
-  `dataset_toko_saya.orders`
-where city = 'New York City'
-group by 1
-having sum(sales) > 5000
