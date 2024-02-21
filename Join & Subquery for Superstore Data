@@ -1,3 +1,8 @@
+--Dataset = Order, Customer, Shipment, Region, Product at Superstore
+--Source = https://drive.google.com/drive/folders/1o5gAab19CZbtrDbJSKcsOFewRFpcfJKU?usp=sharing
+--Tool = Google Big Query 
+
+
 --left join order table and customer table with customer id column
 SELECT
 *
