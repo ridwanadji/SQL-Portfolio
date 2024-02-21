@@ -1,3 +1,7 @@
+--Dataset = orders transaction in tokopidi company
+--Source = https://docs.google.com/spreadsheets/d/11vW5m7666-QnN18K2e1gTD_JRkHHpyTzSjPUz7ZcF-w/edit?usp=sharing
+--Tool = Google Big Query 
+
 --display the entire table where the largest profits are displayed with a sales range of 50 to 100
 select
 *
