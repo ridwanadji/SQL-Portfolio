@@ -1,0 +1,209 @@
+--left join order table and customer table with customer id column
+SELECT
+*
+from
+  tokopaediproject123.relational_superstore.order t_order
+left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+
+-- another example left join
+SELECT
+  order_id,
+  t_order.customer_id,
+  customer_name,
+  segment
+from
+  tokopaediproject123.relational_superstore.order t_order
+left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+
+--left join table order-customer
+select
+  t_order.order_id,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_order.product_id,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+
+--left join table order-customer-region
+select
+  t_order.order_id,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_region.city,
+  t_region.state,
+  t_region.region,
+  t_region.country,
+  t_order.product_id,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+  left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+  left join tokopaediproject123.relational_superstore.region t_region on t_order.postal_code = t_region.postal_code
+
+  --join table order-customer-region-product
+  select
+  t_order.order_id,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_region.city,
+  t_region.state,
+  t_region.region,
+  t_region.country,
+  t_order.product_id,
+  t_product.product_name,
+  t_product.subcategory,
+  t_product.category,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+  left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+  left join tokopaediproject123.relational_superstore.region t_region on t_order.postal_code = t_region.postal_code
+  left join tokopaediproject123.relational_superstore.product t_product on t_order.product_id = t_product.product_id
+
+--join table order-customer-region-product-shipment
+  select
+  t_order.order_id,
+  t_ship.order_date,
+  t_ship.ship_date,
+  t_ship.ship_mode,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_region.city,
+  t_region.state,
+  t_region.region,
+  t_region.country,
+  t_order.product_id,
+  t_product.product_name,
+  t_product.subcategory,
+  t_product.category,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+  left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+  left join tokopaediproject123.relational_superstore.region t_region on t_order.postal_code = t_region.postal_code
+  left join tokopaediproject123.relational_superstore.product t_product on t_order.product_id = t_product.product_id
+  left join tokopaediproject123.relational_superstore.shipment t_ship on t_order.order_id = t_ship.order_id
+
+--CTE using with "query_name" as 
+with 
+trx as (
+select 
+  t_order.order_id,
+  t_ship.order_date,
+  t_ship.ship_date,
+  t_ship.ship_mode,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_region.city,
+  t_region.state,
+  t_region.region,
+  t_region.country,
+  t_order.product_id,
+  t_product.product_name,
+  t_product.subcategory,
+  t_product.category,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+  left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+  left join tokopaediproject123.relational_superstore.region t_region on t_order.postal_code = t_region.postal_code
+  left join tokopaediproject123.relational_superstore.product t_product on t_order.product_id = t_product.product_id
+  left join tokopaediproject123.relational_superstore.shipment t_ship on t_order.order_id = t_ship.order_id
+)
+select
+  customer_name,
+  sum(sales) total_belanja
+from 
+trx
+group by 1
+having order by 2 desc
+
+--subquery using with as
+
+with 
+trx as (
+select 
+  t_order.order_id,
+  t_ship.order_date,
+  t_ship.ship_date,
+  t_ship.ship_mode,
+  t_order.customer_id,
+  t_customer.customer_name,
+  t_customer.segment,
+  t_order.postal_code,
+  t_region.city,
+  t_region.state,
+  t_region.region,
+  t_region.country,
+  t_order.product_id,
+  t_product.product_name,
+  t_product.subcategory,
+  t_product.category,
+  t_order.sales,
+  t_order.quantity,
+  t_order.discount,
+  t_order.profit
+from
+  tokopaediproject123.relational_superstore.order t_order
+  left join tokopaediproject123.relational_superstore.customer t_customer on t_order.customer_id = t_customer.customer_id
+  left join tokopaediproject123.relational_superstore.region t_region on t_order.postal_code = t_region.postal_code
+  left join tokopaediproject123.relational_superstore.product t_product on t_order.product_id = t_product.product_id
+  left join tokopaediproject123.relational_superstore.shipment t_ship on t_order.order_id = t_ship.order_id
+)
+
+--orang tajir = sales more than 10000 dollars
+,
+orang_tajir as (
+select
+  customer_name,
+  sum(sales) total_belanja
+from 
+trx
+group by 1
+having sum(sales) > 10000
+order by 2 desc 
+)
+
+--how much the average of spending orang tajir
+--orang super tajir (spending more than the average spending orang tajir)
+select
+*  
+from
+orang_tajir -- subquery in 'from'
+where orang_tajir.total_belanja > (
+  select
+avg(orang_tajir.total_belanja) rata2_orang_tajir
+from
+orang_tajir
+) --exmaple subquery in 'where'
+
+--NOTE : A solution so you don't always have to bring the query table to display, 
+first, you can do this by running the table then save the result as big query table as view 
+then give the table a name and make the prefix like this 'tokopaediproject123.relational_superstore.trx'
