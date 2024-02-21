@@ -1,0 +1,99 @@
+-- MIN MAX SUM AVG
+select
+  min(sales) --min
+from
+  `dataset_toko_saya.orders`
+
+select
+  max(profit) --max
+from
+  `dataset_toko_saya.orders`
+
+select
+  avg(profit) --avg
+from
+  `dataset_toko_saya.orders`
+
+select
+  sum(sales) --sum
+from
+  `dataset_toko_saya.orders`
+
+--tampilkan jumlah penjualan dikelompokan (GROUP BY) berdasarkan kota, diurutkan berdasarkan penjualan terbesar ke terkecil
+select city, 
+  (sum (sales)) total_penjualan
+  from `dataset_toko_saya.orders` 
+  group by city
+  order by sum (sales) desc 
+--atau
+select city, 
+  (sum (sales)) total_penjualan
+  from `dataset_toko_saya.orders` 
+  group by 1
+  order by 2 desc 
+
+--siapa konsumen yang paling loyal/paling sering belanja?
+--tampilkan nama konsumen dan banyaknya belanja dikelpmpokan berdasarkan konsumen dan diurutkan berdasarkan banyaknya belanja
+select
+  customer_name, (count(distinct order_id))
+from
+`dataset_toko_saya.orders`
+group by 1
+order by 2 desc
+
+--produk apa yang paling best seller di kota Los Angeles
+select
+  product_name, sum (quantity)
+from
+  `dataset_toko_saya.orders`
+where city = 'Los Angeles'
+group by 1
+order by 2 desc
+
+--tampilkan total penjualan (sales) berdasarkan kategori di setiap region!
+select
+  region, 
+  category, 
+  sum (sales) total_terjual
+FROM
+  `dataset_toko_saya.orders`
+group by 1, 2
+order by 1, 2
+
+--tampilkan jumlah order dan banyaknya penjualan per orang
+select
+   customer_name,
+  (count (distinct order_id)) Jumlah_order,
+  sum(sales) Total_Penjualan
+from `dataset_toko_saya.orders`
+group by 1
+order by 1
+
+--ORANG KAYA (orang yang total belanjanya diatas 10000 dolar)
+select
+  customer_name,
+  sum(sales)  
+from
+  `dataset_toko_saya.orders`
+where sum(sales) >= 10000 --where tidak bisa memuat fungsi agregat
+group by 1
+
+--apabila ada fungsi agregat (sum, avg, dll) dalam menamilkan data, disarnkan menggunakan 'HAVING'
+--having diquery setelah group by
+select
+  customer_name,
+  sum(sales)  
+from
+  `dataset_toko_saya.orders`
+group by 1
+having sum(sales) > 10000
+
+--contoh kombinasi where dan having
+select
+  customer_name,
+  round (sum(sales),2)  
+from
+  `dataset_toko_saya.orders`
+where city = 'New York City'
+group by 1
+having sum(sales) > 5000
