@@ -1,2 +1,2 @@
 # Ridwan SQL-Portfolio
-Hello! and thank you for visiting. This is my repository that contains SQL Query I've been written for my data analyst course.
+Hello! and thank you for visiting. This is my portfolio that contains the SQL Query I've written for my data analyst course & project. Feel free to look around and you can reach out if there are any questions or feedback.
